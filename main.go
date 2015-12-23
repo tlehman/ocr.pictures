@@ -12,7 +12,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func recognizeHandler(w http.ResponseWriter, r *http.Request) {
-
+	body, _ := ioutil.ReadAll(r.Body)
+	fmt.Println(string(body))
 }
 
 func main() {

@@ -122,7 +122,9 @@
                 ]
               }
 
-              console.log(request);
+              var xhr = new XMLHttpRequest();
+              xhr.open("POST", "//localhost:8080/recognize", true);
+              xhr.send(base64);
             }
 
             // Setup the event listeners.
