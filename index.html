@@ -35,6 +35,9 @@
       #uploaded {
         font: 20pt bold 'Vollkorn';
       }
+      img {
+        max-width: 500px;
+      }
       </style>
   </head>
   <body>
@@ -111,20 +114,32 @@
             }
 
             function makeGoogleVisionApiRequest(base64) {
-              var request = { "requests" : [{
-                  "image": { "content": base64 }
-                }
-                ],
-                "features": [{
-                  "type": "TEXT_DETECTION",
-                  "maxResults": "10"
-                }
-                ]
+              var request = {
+                "requests" : [{
+                  "image": { "content": base64 },
+                  "features" : [{
+                    "type": "TEXT_DETECTION",
+                    "maxResults": "10"
+                  }]
+                }]
               }
 
               var xhr = new XMLHttpRequest();
               xhr.open("POST", "//localhost:8080/recognize", true);
-              xhr.send(base64);
+              xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                  var json = JSON.parse(xhr.responseText);
+                  if(json.responses.length > 0) {
+                    var body = json.responses[0].textAnnotations[0].description;
+                    document.getElementById("ocrtext").innerText = body;
+                  } else {
+                    document.getElementById("ocrtext").innerText = json;
+                  }
+
+                }
+
+              }
+              xhr.send(JSON.stringify(request));
             }
 
             // Setup the event listeners.
@@ -135,9 +150,13 @@
           </script>
         </div>
 
+        <p id="ocrtext">
+        </p>
+
       </div>
 
     </div><!-- /.container -->
+
 
 
   </body>
