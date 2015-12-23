@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <style>
+
+      body {
+        padding-top: 50px;
+      }
+      .starter-template {
+        padding: 40px 15px;
+        text-align: center;
+      }
+      .thumb {
+        height: 75px;
+        border: 1px solid #000;
+        margin: 10px 5px 0 0;
+      }
+      #file_selector {
+        padding: 25px;
+        text-align: center;
+
+      }
+      #drop_zone {
+        border: 2px dashed #bbb;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        padding: 25px;
+        text-align: center;
+        color: #bbb;
+      }
+      #uploaded {
+        font: 20pt bold 'Vollkorn';
+      }
+      </style>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">OCR Pictures</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="//tobilehman.com/about">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>Convert pictures of text into real text</h1>
+        <p class="lead">OCR is short for Optical Character Recognition. Recently, Google Released an alpha version of their <a href="https://cloud.google.com/vision/">Vision API</a>, which uses deep neural networks to classify image data, OCR is one of the services the Google Vision API offers. This site aims to make their OCR services easier to use.
+
+        <div class="container">
+
+          <div id="file_selector">
+            <input type="file" id="file" name="file[]" />
+          </div>
+
+          <div id="drop_zone">
+            <output id="uploaded">Drop file here</output>
+          </div>
+
+          <script>
+            function handleFileSelect(evt) {
+              var file = evt.target.files[0];
+              displayUploadedFile(file);
+            }
+
+            function handleFileDrop(evt) {
+              evt.stopPropagation();
+              evt.preventDefault();
+              var file = evt.dataTransfer.files[0];
+              displayUploadedFile(file);
+            }
+
+            function handleDragOver(evt) {
+              evt.stopPropagation();
+              evt.preventDefault();
+              evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+            }
+
+            function displayUploadedFile(file) {
+              var reader = new FileReader();
+              var output = "";
+              var fileBase64 = "";
+
+              reader.onload = function(e) {
+                fileBase64 = e.target.result.split(",")[1];
+                output = '<img src="' + e.target.result + '" />'
+                document.getElementById('uploaded').innerHTML = output;
+              }
+              reader.readAsDataURL(file);
+            }
+
+            // Setup the event listeners.
+            var dropZone = document.getElementById('drop_zone');
+            dropZone.addEventListener('dragover', handleDragOver, false);
+            dropZone.addEventListener('drop', handleFileDrop, false);
+            document.getElementById('file').addEventListener('change', handleFileSelect, false);
+          </script>
+        </div>
+
+      </div>
+
+    </div><!-- /.container -->
+
+
+  </body>
+</html>
