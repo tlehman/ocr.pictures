@@ -98,13 +98,31 @@
               var reader = new FileReader();
               var output = "";
               var fileBase64 = "";
+              var fileDataURL = "";
 
               reader.onload = function(e) {
-                fileBase64 = e.target.result.split(",")[1];
-                output = '<img src="' + e.target.result + '" />'
+                fileDataURL = e.target.result;
+                fileBase64 = fileDataURL.split(",")[1];
+                output = '<img src="' + fileDataURL + '" />'
                 document.getElementById('uploaded').innerHTML = output;
+                makeGoogleVisionApiRequest(fileBase64);
               }
               reader.readAsDataURL(file);
+            }
+
+            function makeGoogleVisionApiRequest(base64) {
+              var request = { "requests" : [{
+                  "image": { "content": base64 }
+                }
+                ],
+                "features": [{
+                  "type": "TEXT_DETECTION",
+                  "maxResults": "10"
+                }
+                ]
+              }
+
+              console.log(request);
             }
 
             // Setup the event listeners.
