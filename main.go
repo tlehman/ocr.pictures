@@ -15,6 +15,11 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, string(buf))
 }
 
+func aboutHandler(w http.ResponseWriter, r *http.Request) {
+	buf, _ := ioutil.ReadFile("about.html")
+	fmt.Fprintf(w, string(buf))
+}
+
 func recognizeHandler(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
 	url := googleVisionApiUrl + os.Getenv("GVAPIKEY")
@@ -31,6 +36,10 @@ func recognizeHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "favicon.ico")
+	})
+	http.HandleFunc("/about", aboutHandler)
 	http.HandleFunc("/recognize", recognizeHandler)
 
 	http.ListenAndServe(":8080", nil)

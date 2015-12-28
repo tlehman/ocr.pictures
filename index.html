@@ -3,9 +3,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <link href="/favicon.ico" type="image/ico" rel="icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <style>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"
+      integrity="sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqveZETq72KgDVJCp2TC"
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+      integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A=="
+      crossorigin="anonymous"></script>
 
+    <style>
       body {
         padding-top: 50px;
       }
@@ -56,7 +63,7 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">Home</a></li>
-            <li><a href="//tobilehman.com/about">About</a></li>
+            <li><a href="/about">About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -66,7 +73,6 @@
 
       <div class="starter-template">
         <h1>Convert pictures of text into real text</h1>
-        <p class="lead">OCR is short for Optical Character Recognition. Recently, Google Released an alpha version of their <a href="https://cloud.google.com/vision/">Vision API</a>, which uses deep neural networks to classify image data, OCR is one of the services the Google Vision API offers. This site aims to make their OCR services easier to use.
 
         <div class="container">
 
@@ -94,7 +100,7 @@
             function handleDragOver(evt) {
               evt.stopPropagation();
               evt.preventDefault();
-              evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+              evt.dataTransfer.dropEffect = 'copy';
             }
 
             function displayUploadedFile(file) {
@@ -125,7 +131,7 @@
               }
 
               var xhr = new XMLHttpRequest();
-              xhr.open("POST", "//localhost:8080/recognize", true);
+              xhr.open("POST", "//ocr.pictures/recognize", true);
               xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                   var json = JSON.parse(xhr.responseText);
