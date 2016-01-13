@@ -5,4 +5,6 @@ OCR is short for Optical Character Recognition. Recently, Google Released an alp
 TO-DO:
   - Store image hash to response so as to avoid wasting API calls.
 
+Working Example Application:
 
+https://ocr.pictures
